@@ -37,6 +37,11 @@ main(
 	xosd_set_shadow_offset( osd, 1 );
 	/* Open pipe and show it by lines				 */
 	sprintf( path, "%s/%s", getenv( "HOME" ), "xmms-fifo" );
+	/* Daemonize and start doing "the right thing" (tm)		 */
+	if( daemon( 0, 0 ) )	{
+		perror( "daemon( 0, 0 )" );
+		exit(1);
+	}
 Again:
 	fyle = fopen( path, "rt" );
 	if( ! fyle )	{
