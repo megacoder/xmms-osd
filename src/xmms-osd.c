@@ -2,15 +2,18 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
 #include <errno.h>
 #include <ctype.h>
+#include <string.h>
 
+#include <xmmsctrl.h>
 #include <xosd.h>
 
 #include <gcc-compat.h>
 
 static	char const	font[] = "-misc-fixed-medium-r-normal--13-120-75-75-c-70-iso8859-1";
+static	unsigned const	debug = 0;
+static	unsigned int const usecs = 750000;	/* 0.75 seconds		 */
 
 int
 main(
@@ -19,13 +22,14 @@ main(
 )
 {
 	xosd * const	osd = xosd_create( 1 );
-	char		path[ PATH_MAX + 1 ];
-	FILE *		fyle;
-	char		buffer[ BUFSIZ + 1 ];
-	int		c;
-	char *		bp;
+	gint		session;
+	gint		last_pos;
 
-	printf( "Version %s\n", VERSION );
+	if( debug )	{
+		printf( "Version %s\n", VERSION );
+	}
+	session = 0;		/* This is probably crap		 */
+	last_pos = -1;
 	/* Set up the XOSD window					 */
 	xosd_set_align( osd, XOSD_center );
 	xosd_set_pos( osd, XOSD_bottom );
@@ -35,48 +39,45 @@ main(
 	xosd_set_colour( osd, "#e3f6f6" );
 	xosd_set_timeout( osd, 18 );
 	xosd_set_shadow_offset( osd, 1 );
-	/* Open pipe and show it by lines				 */
-	sprintf( path, "%s/%s", getenv( "HOME" ), "xmms-fifo" );
-	/* Daemonize and start doing "the right thing" (tm)		 */
-	if( daemon( 0, 0 ) )	{
-		perror( "daemon( 0, 0 )" );
-		exit(1);
-	}
-Again:
-	fyle = fopen( path, "rt" );
-	if( ! fyle )	{
-		perror( path );
-		exit( 1 );
-	}
-	c = ' ';
-	bp = buffer;
 	for( ; ; )	{
-		/* Read until we get a non-blank			 */
-		while( isspace( c ) )	{
-			c = fgetc( fyle );
-			if( c == -1 )	{
-				fclose( fyle );
-				goto Again;
+
+		if(xmms_remote_is_playing( session ) )	{
+			int const	pos = xmms_remote_get_playlist_pos( session );
+			if( pos != last_pos )	{
+				char *	title = xmms_remote_get_playlist_title(
+							session,
+							pos
+						);
+				char *		bp;
+
+				last_pos = pos;
+				/* Drop trailing blanks			 */
+				for(
+					bp = title + strlen( title );
+					(bp > title) && bp[-1] && isspace( bp[-1] );
+					*--bp = '\0'
+				);
+				/* Step over leading blanks		 */
+				for( bp = title; *bp && isspace( *bp ); ++bp );
+				/* Show our work			 */
+				if( debug )	{
+					puts( bp );
+				}
+				xosd_display(
+					osd,
+					0,
+					XOSD_string,
+					bp
+				);
+				free( title );
 			}
 		}
-		/* Read until we get a newline				 */
-		do	{
-			*bp++ = c;
-			c = fgetc( fyle );
-			if( c == -1 )	{
-				puts( "Goner!" );
-				exit( 0 );
-			}
-		} while( (c != '\n') && (bp < buffer+sizeof(buffer)) );
-		*bp = '\0';
-		puts( buffer );
-		xosd_display(
-			osd,
-			0,
-			XOSD_string,
-			buffer
-		);
+		if(usleep( usecs ) == -1 )	{
+			break;
+		}
 	}
-	puts( "Bye!" );
+	if( debug )	{
+		puts( "Bye!" );
+	}
 	exit( 0 );
 }
