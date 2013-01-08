@@ -13,8 +13,8 @@ License: GPLv2
 URL: http://www.megacoder.com/
 Group: Applications/System
 Buildroot: %{_tmppath}/%{name}-root
-BuildRequires: xosd-devel
-Requires: xosd
+BuildRequires: xosd-devel xmms-devel
+Requires: xosd xmms
 
 %description
 Announce XMMS songs.
