@@ -21,7 +21,7 @@ typedef	enum	states_e	{
 	state_playing	= 3
 } states_t;
 
-static	char const	font[] = "-misc-fixed-medium-r-normal--13-120-75-75-c-70-iso8859-1";
+static	char const	font[] = "-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-1";
 static	unsigned const	debug = 0;
 static	unsigned int const usecs = 750000;	/* 0.75 seconds		 */
 
