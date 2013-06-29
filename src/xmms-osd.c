@@ -121,6 +121,12 @@ main(
 								session,
 								pos
 					);
+					if( strcmp( msg, "-" ) == 0 )	{
+						free( msg );
+						msg = strdup(
+							"<?HUH?>-<?HUH?>"
+						);
+					}
 					last_vol = vol;
 					break;
 				}
