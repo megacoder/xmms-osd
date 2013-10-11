@@ -8,6 +8,8 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdarg.h>
+#include <ctype.h>
+#include <memory.h>
 
 #include <xmmsctrl.h>
 #include <xosd.h>
@@ -24,6 +26,19 @@ typedef	enum	states_e	{
 static	char const	font[] = "-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-1";
 static	unsigned const	debug = 0;
 static	unsigned int const usecs = 750000;	/* 0.75 seconds		 */
+
+static	void *
+xalloc(
+	size_t	n
+)
+{
+	void * const	s = malloc( n );
+	if( !s )	{
+		perror( "malloc" );
+		exit( 1 );
+	}
+	return( s );
+}
 
 static	void			_printf(2,3)
 display(
@@ -59,6 +74,63 @@ display(
 		);
 	}
 	va_end( ap );
+}
+
+static	char *
+demangle(
+	char *		msg
+)
+{
+	size_t const	len = strlen( msg );
+	size_t const	need = (len*2)+1;
+	char *		new = xalloc( need );
+	char *		in;
+	char *		out;
+	int		c;
+
+	do	{
+		/* First insert spaces on lc:uc transition		 */
+		in = msg;
+		out = new;
+		while( (c = *in++ & 0xFF) != '\0' )	{
+			if( islower(c) && isupper( *in ) )	{
+				*out++ = c;
+				*out++ = ' ';
+				*out++ = *in++;
+			} else	{
+				*out++ = c;
+			}
+			/* Did we pass artist-title barrier?		 */
+			if( c == '-' )	{
+				break;
+			}
+		}
+		/* We're in the title; ensure title case		 */
+		while( (c = *in++ & 0xFF) != '\0' )	{
+			if( c == '_' )	{
+				/* Replace underbars with spaces	 */
+				c = ' ';
+			}
+			if(
+				(isspace( c ) | ispunct( c )) &&
+				islower( *in )
+				)	{
+				/* Find title case transition		 */
+				*out++ = c;
+				*out++ = toupper( *in++ );
+			} else if( islower(c) & isupper( *in ) )	{
+				/* Separate words denoted by caps	 */
+				*out++ = c;
+				*out++ = ' ';
+				*out++ = *in++;
+			} else	{
+				*out++ = c;
+			}
+		}
+		*out++ = c;
+	} while( 0 );
+	free( msg );
+	return( new );
 }
 
 int
@@ -121,12 +193,7 @@ main(
 								session,
 								pos
 					);
-					if( strcmp( msg, "-" ) == 0 )	{
-						free( msg );
-						msg = strdup(
-							"<?HUH?>-<?HUH?>"
-						);
-					}
+					msg = demangle( msg );
 					last_vol = vol;
 					break;
 				}
