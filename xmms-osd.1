@@ -1,4 +1,4 @@
-.TH ERRNO "1" "Sep 2013" "MegaCoder.com" "User Commands"
+.TH ERRNO "1" "Feb 2013" "MegaCoder.com" "User Commands"
 .SH NAME
 xmms-osd \- display XMMS song information changes via an OSD
 .SH SYNOPSIS
@@ -14,20 +14,29 @@ If given a number, displays the associated \fIxmms-osd\fP value and a descriptiv
 If given a name, does the same.
 .TP
 [\fB\-c\fR \fIcolor\fP]
+set text notification color; use either the color name or the hex
+representation
 .TP
-[\fB\-X\fR \fIoffset\fP]
+[\fB\-X\fR \fIdelta\fP]
+provide a pixel offset from the horizontal position.
 .TP
-[\fB\-Y\fR \fIoffset\fP]
+[\fB\-Y\fR \fIdelta\fP]
+provide a pixel offset from the vertical position.
 .TP
 [\fB\-x\fR \fIhpos\fP]
+set horizontal position:
+\fIleft\fP
+\fImiddle\fP
+\fIright\fP
 .TP
 [\fB\-y\fR \fIvpos\fP]
+set vertical position:
+\fItop\fP
+\fIcenter\fP
+\fIbottom\fP
 .SH AUTHOR
 Written by Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
 .SH COPYRIGHT
-Copyright \(co 2013 Tommy Reynolds; all rights reserved; international copyright secured.
+Copyright \(co 2013-2014 Tommy Reynolds; all rights reserved; international copyright secured.
 .PP
 This code is licensed under the GPL v2, and no other.
-.SH "SEE ALSO"
-.PP
-\fIxmms-osd(\fP3\fI)\fP

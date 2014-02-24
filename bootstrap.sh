@@ -10,3 +10,9 @@ mkdir -p m4
 autoreconf -fvim -I m4
 ./configure
 make dist
+rm -rf RPM
+mkdir -p RPM
+rpmbuild								\
+	-D"_topdir ${PWD}/RPM"						\
+	-D"_srcdir ${PWD}"						\
+	"$@"
