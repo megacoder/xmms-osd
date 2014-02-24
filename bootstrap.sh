@@ -11,8 +11,10 @@ autoreconf -fvim -I m4
 ./configure
 make dist
 rm -rf RPM
-mkdir -p RPM
+mkdir -p RPM/{SOURCES,RPMS,SRPMS,BUILD,SPECS}
+set -x
 rpmbuild								\
 	-D"_topdir ${PWD}/RPM"						\
-	-D"_srcdir ${PWD}"						\
-	"$@"
+	-D"_sourcedir ${PWD}"						\
+	-ba								\
+	xmms-osd.spec
