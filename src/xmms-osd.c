@@ -10,6 +10,7 @@
 #include <stdarg.h>
 #include <ctype.h>
 #include <memory.h>
+#include <getopt.h>
 
 #include <xmmsctrl.h>
 #include <xosd.h>
@@ -48,7 +49,11 @@ static	int		vert_choice = XOSD_bottom;
 static	int		vert_offset = 2;
 static	int		horz_choice = XOSD_middle;
 static	int		horz_offset = -900;
+#if	0
 static	char const *	text_color  = "#e3f6f6";
+#else
+static	char const *	text_color  = "#FF0010";
+#endif
 static	int		timeout = 18;
 static	int		shadow = 1;
 
@@ -169,7 +174,26 @@ main(
 	gint		last_pos;
 	gint		last_vol;
 	states_t	state;
+	int		c;
 
+	while( (c = getopt( argc, argv, "c:" )) != EOF )	{
+		switch( c )	{
+		default:
+			fprintf(
+				stderr,
+				"dunno '-%c'.\n",
+				c
+			);
+			exit( 1 );
+		case 'c':
+			text_color = optarg;
+			break;
+		}
+	}
+	if( optind < argc )	{
+		fprintf( stderr, "Too many arguments.\n" );
+		exit( 1 );
+	}
 	if( debug )	{
 		printf( "Version %s\n", VERSION );
 	}
