@@ -31,7 +31,7 @@ typedef	struct	dict_s	{
 
 static	char const *	me = "xmms-osd";
 static	char const *	font = "-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-1";
-static	unsigned const	debug = 0;
+static	unsigned	debug = 0;
 static	unsigned int const usecs = 750000;	/* 0.75 seconds		 */
 
 static	dict_t const	vert_dict[] =	{
@@ -50,7 +50,7 @@ static	dict_t const	horz_dict[] =	{
 
 static	int		vert_choice = XOSD_bottom;
 static	int		vert_offset = 2;
-static	int		horz_choice = XOSD_middle;
+static	int		horz_choice = XOSD_center;
 static	int		horz_offset = -900;
 static	char const *	text_color  = "#e3f6f6";
 static	int		timeout = 18;
@@ -253,13 +253,13 @@ main(
 			horz_choice = search_dict( horz_dict, optarg );
 			break;
 		case 'H':
-			horz_offset = strtoul( optarg, 0, 10 );
+			horz_offset = strtol( optarg, 0, 10 );
 			break;
 		case 'v':
 			vert_choice = search_dict( vert_dict, optarg );
 			break;
 		case 'V':
-			vert_offset = strtoul( optarg, 0, 10 );
+			vert_offset = strtol( optarg, 0, 10 );
 			break;
 		}
 	}
