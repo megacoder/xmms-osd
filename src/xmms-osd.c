@@ -36,13 +36,15 @@ static	unsigned int const usecs = 750000;	/* 0.75 seconds		 */
 static	dict_t const	vert_dict[] =	{
 	{ "top",	XOSD_top	},
 	{ "center",	XOSD_center	},
-	{ "bottom",	XOSD_bottom	}
+	{ "bottom",	XOSD_bottom	},
+	{ NULL,		0		}
 };
 
 static	dict_t const	horz_dict[] =	{
 	{ "left",	XOSD_left	},
 	{ "middle",	XOSD_middle	},
-	{ "right",	XOSD_right	}
+	{ "right",	XOSD_right	},
+	{ NULL,		0		}
 };
 
 static	int		vert_choice = XOSD_bottom;
@@ -56,6 +58,28 @@ static	char const *	text_color  = "#FF0010";
 #endif
 static	int		timeout = 18;
 static	int		shadow = 1;
+
+static	dict_t const *
+search_dict(
+	dict_t const *	dict,
+	char const *	s
+)
+{
+	dict_t const *	retval;
+
+	retval = NULL;
+	do	{
+		dict_t const *	thumb;
+
+		for( thumb = dict; thumb->spelling; ++thumb )	{
+			if( !strcmp( thumb->spelling, s ) )	{
+				retval = thumb;
+				break;
+			}
+		}
+	} while( 0 );
+	return( retval );
+}
 
 static	void *
 xalloc(
@@ -175,8 +199,9 @@ main(
 	gint		last_vol;
 	states_t	state;
 	int		c;
+	dict_t const *	dict;
 
-	while( (c = getopt( argc, argv, "c:" )) != EOF )	{
+	while( (c = getopt( argc, argv, "c:x:X:y:Y:" )) != EOF )	{
 		switch( c )	{
 		default:
 			fprintf(
@@ -187,6 +212,36 @@ main(
 			exit( 1 );
 		case 'c':
 			text_color = optarg;
+			break;
+		case 'x':
+			dict = search_dict( horz_dict, optarg );
+			if( !dict )	{
+				fprintf(
+					stderr,
+					"Unknown horz position '%s'.\n",
+					optarg
+				);
+				exit( 1 );
+			}
+			horz_choice = dict->value;
+			break;
+		case 'X':
+			horz_offset = strtoul( optarg, 0, 10 );
+			break;
+		case 'y':
+			dict = search_dict( vert_dict, optarg );
+			if( !dict )	{
+				fprintf(
+					stderr,
+					"Unknown vert position '%s'.\n",
+					optarg
+				);
+				exit( 1 );
+			}
+			vert_choice = dict->value;
+			break;
+		case 'Y':
+			vert_offset = strtoul( optarg, 0, 10 );
 			break;
 		}
 	}
