@@ -29,6 +29,7 @@ typedef	struct	dict_s	{
 	int const		value;
 } dict_t;
 
+static	char const *	me = "xmms-osd";
 static	char const	font[] = "-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-1";
 static	unsigned const	debug = 0;
 static	unsigned int const usecs = 750000;	/* 0.75 seconds		 */
@@ -183,6 +184,34 @@ demangle(
 	return( new );
 }
 
+static	void
+usage(
+	char const *	fmt,
+	...
+)
+{
+	if( fmt )	{
+		va_list	ap;
+
+		fprintf( stderr, "%s: ", me );
+		va_start( ap, fmt );
+		vfprintf( stderr, fmt, ap );
+		va_end( ap );
+		fprintf( stderr, ".\n" );
+	}
+	fprintf(
+		stderr,
+		"usage: %s"
+		" [-X hoff]"
+		" [-Y voff]"
+		" [-c color]"
+		" [-x hpos]"
+		" [-y vpos]"
+		"\n",
+		me
+	);
+}
+
 int
 main(
 	int		argc		_unused,
@@ -200,11 +229,7 @@ main(
 	while( (c = getopt( argc, argv, "c:x:X:y:Y:" )) != EOF )	{
 		switch( c )	{
 		default:
-			fprintf(
-				stderr,
-				"dunno '-%c'.\n",
-				c
-			);
+			usage( NULL );
 			exit( 1 );
 		case 'c':
 			text_color = optarg;
@@ -242,7 +267,7 @@ main(
 		}
 	}
 	if( optind < argc )	{
-		fprintf( stderr, "Too many arguments.\n" );
+		usage( "too many arguments" );
 		exit( 1 );
 	}
 	if( debug )	{
