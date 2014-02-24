@@ -51,11 +51,7 @@ static	int		vert_choice = XOSD_bottom;
 static	int		vert_offset = 2;
 static	int		horz_choice = XOSD_middle;
 static	int		horz_offset = -900;
-#if	0
 static	char const *	text_color  = "#e3f6f6";
-#else
-static	char const *	text_color  = "#FF0010";
-#endif
 static	int		timeout = 18;
 static	int		shadow = 1;
 
