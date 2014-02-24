@@ -36,14 +36,14 @@ static	unsigned int const usecs = 750000;	/* 0.75 seconds		 */
 
 static	dict_t const	vert_dict[] =	{
 	{ "top",	XOSD_top	},
-	{ "center",	XOSD_center	},
+	{ "middle",	XOSD_middle	},
 	{ "bottom",	XOSD_bottom	},
 	{ NULL,		0		}
 };
 
 static	dict_t const	horz_dict[] =	{
 	{ "left",	XOSD_left	},
-	{ "middle",	XOSD_middle	},
+	{ "center",	XOSD_center	},
 	{ "right",	XOSD_right	},
 	{ NULL,		0		}
 };
@@ -269,9 +269,9 @@ main(
 	state = state_unknown;
 	/* Set up the XOSD window					 */
 	xosd_set_align( osd, horz_choice );
+	xosd_set_horizontal_offset( osd, horz_offset );
 	xosd_set_pos( osd, vert_choice );
 	xosd_set_vertical_offset( osd, vert_offset );
-	xosd_set_horizontal_offset( osd, horz_offset );
 	xosd_set_font( osd, font );
 	xosd_set_colour( osd, text_color );
 	xosd_set_timeout( osd, timeout );
