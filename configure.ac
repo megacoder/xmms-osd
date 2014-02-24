@@ -1,5 +1,5 @@
 AC_PREREQ([2.68])
-AC_INIT([xmms-osd], [0.0.8], [Tommy.Reynolds@MegaCoder.com])
+AC_INIT([xmms-osd], [1.0.0], [Tommy.Reynolds@MegaCoder.com])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([src/config.h])
 
