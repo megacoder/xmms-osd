@@ -30,7 +30,7 @@ typedef	struct	dict_s	{
 } dict_t;
 
 static	char const *	me = "xmms-osd";
-static	char const	font[] = "-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-1";
+static	char const *	font = "-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-1";
 static	unsigned const	debug = 0;
 static	unsigned int const usecs = 750000;	/* 0.75 seconds		 */
 
@@ -77,6 +77,7 @@ usage(
 		" [-H hoff]"
 		" [-V voff]"
 		" [-c color]"
+		" [-f font]"
 		" [-h hpos]"
 		" [-v vpos]"
 		"\n",
@@ -234,13 +235,19 @@ main(
 	states_t	state;
 	int		c;
 
-	while( (c = getopt( argc, argv, "c:h:H:v:V:" )) != EOF )	{
+	while( (c = getopt( argc, argv, "c:Df:h:H:v:V:" )) != EOF )	{
 		switch( c )	{
 		default:
 			usage( NULL );
 			exit( 1 );
 		case 'c':
 			text_color = optarg;
+			break;
+		case 'D':
+			++debug;
+			break;
+		case 'f':
+			font = optarg;
 			break;
 		case 'h':
 			horz_choice = search_dict( horz_dict, optarg );
