@@ -210,6 +210,18 @@ usage(
 		"\n",
 		me
 	);
+	fprintf(
+		stderr,
+		"  o Text color can be specified as a color name or hex value.\n"
+	);
+	fprintf(
+		stderr,
+		"  o Horizonal positions are 'left', 'middle', or 'right'.\n"
+	);
+	fprintf(
+		stderr,
+		"  o Vertical positions are 'top', 'center', or 'bottom'.\n"
+	);
 }
 
 int
