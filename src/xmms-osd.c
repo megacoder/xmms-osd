@@ -56,26 +56,63 @@ static	char const *	text_color  = "#e3f6f6";
 static	int		timeout = 18;
 static	int		shadow = 1;
 
-static	dict_t const *
+static	void
+usage(
+	char const *	fmt,
+	...
+)
+{
+	if( fmt )	{
+		va_list	ap;
+
+		fprintf( stderr, "%s: ", me );
+		va_start( ap, fmt );
+		vfprintf( stderr, fmt, ap );
+		va_end( ap );
+		fprintf( stderr, ".\n" );
+	}
+	fprintf(
+		stderr,
+		"usage: %s"
+		" [-H hoff]"
+		" [-V voff]"
+		" [-c color]"
+		" [-h hpos]"
+		" [-v vpos]"
+		"\n",
+		me
+	);
+	fprintf(
+		stderr,
+		"  o Text color can be specified as a color name or hex value.\n"
+	);
+	fprintf(
+		stderr,
+		"  o Horizonal positions are 'left', 'middle', or 'right'.\n"
+	);
+	fprintf(
+		stderr,
+		"  o Vertical positions are 'top', 'center', or 'bottom'.\n"
+	);
+}
+
+static	int
 search_dict(
 	dict_t const *	dict,
 	char const *	s
 )
 {
-	dict_t const *	retval;
-
-	retval = NULL;
 	do	{
 		dict_t const *	thumb;
 
 		for( thumb = dict; thumb->spelling; ++thumb )	{
 			if( !strcmp( thumb->spelling, s ) )	{
-				retval = thumb;
-				break;
+				return( thumb->value );
 			}
 		}
 	} while( 0 );
-	return( retval );
+	usage( "spelling not recognized '%s'", s );
+	exit( 1 );
 }
 
 static	void *
@@ -184,46 +221,6 @@ demangle(
 	return( new );
 }
 
-static	void
-usage(
-	char const *	fmt,
-	...
-)
-{
-	if( fmt )	{
-		va_list	ap;
-
-		fprintf( stderr, "%s: ", me );
-		va_start( ap, fmt );
-		vfprintf( stderr, fmt, ap );
-		va_end( ap );
-		fprintf( stderr, ".\n" );
-	}
-	fprintf(
-		stderr,
-		"usage: %s"
-		" [-X hoff]"
-		" [-Y voff]"
-		" [-c color]"
-		" [-x hpos]"
-		" [-y vpos]"
-		"\n",
-		me
-	);
-	fprintf(
-		stderr,
-		"  o Text color can be specified as a color name or hex value.\n"
-	);
-	fprintf(
-		stderr,
-		"  o Horizonal positions are 'left', 'middle', or 'right'.\n"
-	);
-	fprintf(
-		stderr,
-		"  o Vertical positions are 'top', 'center', or 'bottom'.\n"
-	);
-}
-
 int
 main(
 	int		argc		_unused,
@@ -236,9 +233,8 @@ main(
 	gint		last_vol;
 	states_t	state;
 	int		c;
-	dict_t const *	dict;
 
-	while( (c = getopt( argc, argv, "c:x:X:y:Y:" )) != EOF )	{
+	while( (c = getopt( argc, argv, "c:h:H:v:V:" )) != EOF )	{
 		switch( c )	{
 		default:
 			usage( NULL );
@@ -246,34 +242,16 @@ main(
 		case 'c':
 			text_color = optarg;
 			break;
-		case 'x':
-			dict = search_dict( horz_dict, optarg );
-			if( !dict )	{
-				fprintf(
-					stderr,
-					"Unknown horz position '%s'.\n",
-					optarg
-				);
-				exit( 1 );
-			}
-			horz_choice = dict->value;
+		case 'h':
+			horz_choice = search_dict( horz_dict, optarg );
 			break;
-		case 'X':
+		case 'H':
 			horz_offset = strtoul( optarg, 0, 10 );
 			break;
-		case 'y':
-			dict = search_dict( vert_dict, optarg );
-			if( !dict )	{
-				fprintf(
-					stderr,
-					"Unknown vert position '%s'.\n",
-					optarg
-				);
-				exit( 1 );
-			}
-			vert_choice = dict->value;
+		case 'v':
+			vert_choice = search_dict( vert_dict, optarg );
 			break;
-		case 'Y':
+		case 'V':
 			vert_offset = strtoul( optarg, 0, 10 );
 			break;
 		}
