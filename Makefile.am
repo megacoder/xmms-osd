@@ -2,7 +2,7 @@ SUBDIRS=src
 
 EXTRA_DIST=AUTHORS COPYING ChangeLog INSTALL NEWS README README.md     \
 	 README.html TODO bootstrap.sh configure.ac install-sh missing \
-	 LICENSE xmms-osd.1
+	 LICENSE
 
 .PHONY:	.FORCE
 

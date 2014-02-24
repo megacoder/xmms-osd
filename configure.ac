@@ -10,6 +10,10 @@ AC_PROG_CC
 AC_PROG_MAKE_SET
 
 # Checks for libraries.
+AC_CHECK_FUNCS([strdup])
+AC_CHECK_FUNCS([strtolu])
+AC_FUNC_MALLOC
+AC_TYPE_SIZE_T
 
 # Checks for header files.
 AC_CHECK_HEADERS([limits.h stdlib.h string.h unistd.h])
