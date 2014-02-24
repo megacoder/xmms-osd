@@ -23,9 +23,34 @@ typedef	enum	states_e	{
 	state_playing	= 3
 } states_t;
 
+typedef	struct	dict_s	{
+	char const * const	spelling;
+	int const		value;
+} dict_t;
+
 static	char const	font[] = "-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-1";
 static	unsigned const	debug = 0;
 static	unsigned int const usecs = 750000;	/* 0.75 seconds		 */
+
+static	dict_t const	vert_dict[] =	{
+	{ "top",	XOSD_top	},
+	{ "center",	XOSD_center	},
+	{ "bottom",	XOSD_bottom	}
+};
+
+static	dict_t const	horz_dict[] =	{
+	{ "left",	XOSD_left	},
+	{ "middle",	XOSD_middle	},
+	{ "right",	XOSD_right	}
+};
+
+static	int		vert_choice = XOSD_bottom;
+static	int		vert_offset = 2;
+static	int		horz_choice = XOSD_middle;
+static	int		horz_offset = -900;
+static	char const *	text_color  = "#e3f6f6";
+static	int		timeout = 18;
+static	int		shadow = 1;
 
 static	void *
 xalloc(
@@ -153,14 +178,14 @@ main(
 	last_vol = -1;
 	state = state_unknown;
 	/* Set up the XOSD window					 */
-	xosd_set_align( osd, XOSD_center );
-	xosd_set_pos( osd, XOSD_bottom );
-	xosd_set_vertical_offset( osd, 2 );
-	xosd_set_horizontal_offset( osd, -900 );
+	xosd_set_align( osd, horz_choice );
+	xosd_set_pos( osd, vert_choice );
+	xosd_set_vertical_offset( osd, vert_offset );
+	xosd_set_horizontal_offset( osd, horz_offset );
 	xosd_set_font( osd, font );
-	xosd_set_colour( osd, "#e3f6f6" );
-	xosd_set_timeout( osd, 18 );
-	xosd_set_shadow_offset( osd, 1 );
+	xosd_set_colour( osd, text_color );
+	xosd_set_timeout( osd, timeout );
+	xosd_set_shadow_offset( osd, shadow );
 	for( ; ; )	{
 		char *		msg;
 
