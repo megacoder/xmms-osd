@@ -37,6 +37,7 @@ Announce XMMS songs.
 %defattr(-,root,root)
 %doc AUTHORS COPYING README INSTALL NEWS LICENSE TODO
 %{_bindir}/%{name}
+%{_mandir}/man1/xmms-osd.1
 
 %changelog
 * Tue May 16 2009 Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
