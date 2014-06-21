@@ -1,0 +1,143 @@
+2014-06-21  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* configure.ac, src/xmms-osd.c: Changed default text color to
+	"#A0A0FF" for better visibility for all background colors.  No way
+	to change the shadow color, though.
+
+2014-02-24  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* configure.ac, src/xmms-osd.c: Changed my defaults.
+
+2014-02-24  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* configure.ac: Bumped version
+
+2014-02-24  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* src/xmms-osd.c, xmms-osd.1: Allow font to be changed
+
+2014-02-24  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* src/xmms-osd.c: Get the nomenclature right.
+
+2014-02-24  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* xmms-osd.1: man(1) page gets new argument settings
+
+2014-02-24  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* src/xmms-osd.c: Renamed arguments
+
+2014-02-24  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* src/xmms-osd.c: Usage expanded
+
+2014-02-24  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* src/xmms-osd.c: Added usage
+
+2014-02-24  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* Makefile.am, bootstrap.sh, xmms-osd.spec.in: Build RPM packages
+	locally, as a normal non-root user with no prep.
+
+2014-02-23  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* Makefile.am, bootstrap.sh, configure.ac: Checkpoint
+
+2014-02-23  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* xmms-osd.spec.in: Checkpoint
+
+2014-02-23  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* bootstrap.sh: In-place RPM build.
+
+2014-02-23  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* bootstrap.sh, xmms-osd.1: man(1) page update
+
+2014-02-23  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* xmms-osd.1: man(1) page
+
+2014-02-23  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* xmms-osd.spec.in: Rules
+
+2014-02-23  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* Makefile.am, configure.ac: Added man page
+
+2014-02-23  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* src/xmms-osd.c: Revert text color to my preference.
+
+2014-02-23  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* src/xmms-osd.c: Handle x,y,X,Y values from command line.
+
+2014-02-23  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* src/xmms-osd.c: Allow control of text color.
+
+2014-02-23  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* src/xmms-osd.c: Begin parameterizing the setup attributes.
+
+2013-10-11  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* src/xmms-osd.c: Parse the artist and song title before displaying.
+
+2013-10-11  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* configure.ac: Bumped rev
+
+2013-06-29  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* configure.ac, src/xmms-osd.c: Change simple "-" display into
+	something recognizable and visible.
+
+2013-02-02  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* src/xmms-osd.c: Use bigger font.
+
+2013-01-12  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* configure.ac: Bumbpus rumpus.
+
+2013-01-12  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* src/xmms-osd.c: Correctly report an unpause.
+
+2013-01-10  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* configure.ac, src/xmms-osd.c: Display song or volume change.
+
+2013-01-09  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* README.md: More details.
+
+2013-01-08  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* configure.ac: Bump version.
+
+2013-01-08  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* xmms-osd.spec.in: Now we use xmms-devel to talk directly to
+	xmms(1).
+
+2013-01-08  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* configure.ac, src/Makefile.am, src/xmms-osd.c: Communicate
+	directly with XMMS
+
+2013-01-08  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* configure.ac, src/xmms-osd.c: Invoke daemon(3) to detech from
+	console.
+
+2013-01-06  Tommy Reynolds <Tommy.Reynolds@MegaCoder.com>
+
+	* Baseline
+
