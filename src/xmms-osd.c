@@ -310,12 +310,21 @@ main(
 				pos = xmms_remote_get_playlist_pos( session );
 				vol = xmms_remote_get_main_volume( session );
 				if( pos != last_pos )	{
+					char	buffer[ BUFSIZ + 1 ];
+					char *	info;
+
 					last_pos = pos;
-					msg = xmms_remote_get_playlist_title(
-								session,
-								pos
+					info = xmms_remote_get_playlist_title(
+						session,
+						pos
 					);
-					msg = demangle( msg );
+					sprintf(
+						buffer,
+						"(%u) %s",
+						(unsigned) pos,
+						demangle( info )
+					);
+					msg = strdup( buffer );
 					last_vol = vol;
 					break;
 				}
